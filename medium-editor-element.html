@@ -7,6 +7,31 @@
 `medium-editor`
 Polymer element for https://github.com/yabwe/medium-editor
 
+## Usage
+
+The following shows the usage of the element with it's properties
+
+```html
+<medium-editor
+    id="myEditor"
+    value="{{value}}">
+</medium-editor>
+
+<pre>[[value]]</pre>
+```
+
+by default, it should just work. It will output HTML using it's value property. If you want markdown output, just change the output property.
+
+```html
+<medium-editor
+    id="myEditor"
+    output="markdown"
+    value="{{value}}">
+</medium-editor>
+
+<pre>[[value]]</pre>
+```
+
 @demo demo/index.html 
 -->
 
@@ -39,28 +64,47 @@ Polymer element for https://github.com/yabwe/medium-editor
         is: 'medium-editor',
 
         properties: {
+          /**
+           * Instance of MediumEditor class
+           */
           editor: {
-            type: Object
+            type: Object,
+            readOnly: true
           },
 
+          /**
+           * Custom placeholder text shown in the editor window
+           */
           placeholderText: {
             type: String,
             value: null
           },
 
+          /**
+           * Defines whether to hide the placeholder upon clicking the text editor
+           */
           placeholderHide: {
             type: Boolean,
             value: true
           },
 
+          /**
+           * The output format for the text editor
+           *
+           * Supported values are 'html' and 'markdown'
+           */
           output: {
             type: String,
             value: 'html'
           },
 
+          /**
+           * The current content of the text editor in format defined by output property
+           */
           value: {
             type: String,
-            notify: true
+            notify: true,
+            readOnly: true
           }
         },
 
@@ -71,10 +115,10 @@ Polymer element for https://github.com/yabwe/medium-editor
         _reinitializeEditor: function () {
           if (this.editor) {
             this.editor.destroy()
-            this.editor = null
+            this._setEditor(null)
           }
 
-          this.editor = new MediumEditor(this.$.editor, this._buildOptions())
+          this._setEditor(new MediumEditor(this.$.editor, this._buildOptions()))
           this.editor.subscribe('editableInput', this._handleEditableInput.bind(this))
         },
 
@@ -116,7 +160,7 @@ Polymer element for https://github.com/yabwe/medium-editor
 
         _handleOutput: function (newValue) {
           console.log('_handleOutput', newValue)
-          this.set('value', newValue)
+          this._setValue(newValue)
         }
 
       });
