@@ -2,6 +2,37 @@
 
 Polymer element for https://github.com/yabwe/medium-editor
 
+## Demo
+
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="medium-editor-element.html">
+    <style>
+      #myEditor {
+      	width: 100%;
+        min-height: 300px;
+        border-bottom: 1px solid #2a2a2a;
+      }
+    </style>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<template is="dom-bind">
+  <medium-editor
+      id="myEditor"
+      value="{{value}}">
+  </medium-editor>
+
+  <pre>[[value]]</pre>
+</template>
+```
+
 ## Usage
 
 The following shows the usage of the element with it's properties
