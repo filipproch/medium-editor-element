@@ -1,5 +1,6 @@
 {
   "name": "medium-editor-element",
+  "version": "0.1.0",
   "description": "Polymer element for https://github.com/yabwe/medium-editor",
   "main": "medium-editor-element.html",
   "dependencies": {
