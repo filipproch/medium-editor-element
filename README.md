@@ -35,7 +35,7 @@ Polymer element for https://github.com/yabwe/medium-editor
 
 ## Usage
 
-The following shows the usage of the element with it's properties
+__Basic example, HTML output__
 
 ```html
 <medium-editor
@@ -46,7 +46,7 @@ The following shows the usage of the element with it's properties
 <pre>[[value]]</pre>
 ```
 
-by default, it should just work. It will output HTML using it's value property. If you want markdown output, just change the output property.
+__Markdown output__
 
 ```html
 <medium-editor
