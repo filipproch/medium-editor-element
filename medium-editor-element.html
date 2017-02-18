@@ -1,0 +1,124 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="medium-editor-script.html">
+<link rel="import" href="medium-editor-md-script.html">
+
+<!--
+`medium-editor`
+Polymer element for https://github.com/yabwe/medium-editor
+
+@demo demo/index.html 
+-->
+
+<dom-module id="medium-editor">
+    <template>
+        <link rel="stylesheet" href="../medium-editor/dist/css/medium-editor.css">
+        <link rel="stylesheet" href="../medium-editor/dist/css/themes/default.css">
+        <style>
+            :host {
+                display: block;
+            }
+
+            #editor {
+                width: 100%;
+                height: 100%;
+                outline: 0 solid transparent;
+            }
+
+            #editor:focus {
+                outline: 0 solid transparent;
+            }
+        </style>
+
+        <div id="editor"></div>
+    </template>
+
+    <script>
+      Polymer({
+
+        is: 'medium-editor',
+
+        properties: {
+          editor: {
+            type: Object
+          },
+
+          placeholderText: {
+            type: String,
+            value: null
+          },
+
+          placeholderHide: {
+            type: Boolean,
+            value: true
+          },
+
+          output: {
+            type: String,
+            value: 'html'
+          },
+
+          value: {
+            type: String,
+            notify: true
+          }
+        },
+
+        ready: function () {
+          this._reinitializeEditor()
+        },
+
+        _reinitializeEditor: function () {
+          if (this.editor) {
+            this.editor.destroy()
+            this.editor = null
+          }
+
+          this.editor = new MediumEditor(this.$.editor, this._buildOptions())
+          this.editor.subscribe('editableInput', this._handleEditableInput.bind(this))
+        },
+
+        _buildOptions: function () {
+          var options = {}
+
+          if (this.placeholderText || this.placeholderHide) {
+            var placeholderOptions = {}
+
+            if (this.placeholderText) {
+              placeholderOptions[ 'text' ] = this.placeholderText
+            }
+
+            if (this.placeholderHide) {
+              placeholderOptions[ 'hideOnClick' ] = this.placeholderHide
+            }
+
+            options[ 'placeholder' ] = placeholderOptions
+          }
+
+          var extensions = options[ 'extensions' ] = {}
+
+          switch (this.output) {
+            case 'markdown': {
+              extensions[ 'markdown' ] = new MeMarkdown(function (markdown) {
+                this._handleOutput(markdown)
+              }.bind(this))
+            }
+          }
+
+          return options
+        },
+
+        _handleEditableInput: function (event, editable) {
+          if (this.output === 'html') {
+            this._handleOutput(editable.textContent)
+          }
+        },
+
+        _handleOutput: function (newValue) {
+          console.log('_handleOutput', newValue)
+          this.set('value', newValue)
+        }
+
+      });
+    </script>
+</dom-module>

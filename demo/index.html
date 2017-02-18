@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>medium-editor demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../medium-editor-element.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+        medium-editor {
+            width: 100%;
+            min-height: 300px;
+        }
+
+        .markdown-editor {
+            border: 1px solid #2a2a2a;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="vertical-section-container centered">
+    <h3>Basic medium-editor demo</h3>
+    <demo-snippet>
+        <template>
+            <medium-editor></medium-editor>
+        </template>
+    </demo-snippet>
+    <h3>Markdown medium-editor demo</h3>
+    <demo-snippet>
+        <template>
+            <template is="dom-bind">
+                <medium-editor
+                        output="markdown"
+                        value="{{markdownOutput}}">
+                </medium-editor>
+                <h2>Markdown output</h2>
+                <pre class="markdown-editor">[[markdownOutput]]</pre>
+            </template>
+        </template>
+    </demo-snippet>
+</div>
+</body>
+</html>
