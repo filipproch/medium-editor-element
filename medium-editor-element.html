@@ -32,6 +32,13 @@ by default, it should just work. It will output HTML using it's value property. 
 <pre>[[value]]</pre>
 ```
 
+## Style
+The preferred approach to styling the element is using CSS custom properties and mixins.
+Custom property | Description | Default
+:--- | :--- | :---
+`--medium-editor-min-height` | The minimum height of the editor. | 300px
+
+
 @demo demo/index.html 
 -->
 
@@ -42,12 +49,15 @@ by default, it should just work. It will output HTML using it's value property. 
         <style>
             :host {
                 display: block;
+                width: 100%;
+                --medium-editor-min-height: 300px;
             }
 
             #editor {
                 width: 100%;
                 height: 100%;
                 outline: 0 solid transparent;
+                min-height: var(--medium-editor-min-height);
             }
 
             #editor:focus {
